@@ -231,4 +231,5 @@ app.get('/getMessages',(req,res)=>{
 
 app.listen(app.get('port'), ()=> {
     console.log("Server is running with changes "+ app.get('port') +" port");
+    console.log("Url is ",req.url);
   });
