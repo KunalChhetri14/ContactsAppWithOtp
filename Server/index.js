@@ -39,6 +39,10 @@ const dbName="KissanAssignmentDatabase";
 
 
 
+  app.get('/',(req,res)=>{
+    res.send("welcome to server");
+  })
+
   //This get api is used to fetch all the contact details for every person
   app.get('/getContactList',(req,res)=>{
     console.log("Checking whether api is called");
