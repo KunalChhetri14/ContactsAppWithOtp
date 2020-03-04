@@ -18,7 +18,9 @@ const client = new MongoClient(url, { useNewUrlParser: true });
 //Nexmo required for sending Message
 const Nexmo = require('nexmo');
 
-app.set('port',(process.env.PORT||3001));
+//app.set('port',(process.env.PORT||3001));
+
+var PORT=process.env.PORT || 3001;
 
 app.use(cors());
 
@@ -229,7 +231,9 @@ app.get('/getMessages',(req,res)=>{
 
 // })
 
-app.listen(app.get('port'), ()=> {
-    console.log("Server is running with changes "+ app.get('port') +" port");
-    console.log("Url is ",req.url);
+
+
+app.listen(PORT, (req,res)=> {
+    console.log("Server is running with changes at heroku "+ PORT +" port");
+    //console.log("Url is ",app.get('url'));
   });
