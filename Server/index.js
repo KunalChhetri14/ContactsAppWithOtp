@@ -42,7 +42,7 @@ const dbName="KissanAssignmentDatabase";
     res.send("welcome to server");
   })
 
-  app.post('/jiraWebhooks',(req,res)=>{
+  app.post('/jiraWebhook',(req,res)=>{
     console.log("The body is ",req.body);
     res.send("called jira webhooks");
   })
