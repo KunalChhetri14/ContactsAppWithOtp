@@ -13,12 +13,13 @@ export class AuthGuard implements CanActivate {
     private router:Router
   ){}
 
-
+  
   canActivate():boolean{
     if (this.contactService.allowNavigate()) {
       return true;
     } else {
-      this.router.navigateByUrl('');
+      //redirected to main page
+      this.router.navigateByUrl('/');
       return false;
     }
   }

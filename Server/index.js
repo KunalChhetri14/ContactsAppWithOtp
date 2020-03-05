@@ -3,12 +3,9 @@ const express = require('express');
 const app = express();
 var cors=require('cors');
 var bodyParser=require('body-parser');
+
+//MongoDriver
 var MongoClient = require('mongodb').MongoClient;
-
-
-var TeleSignSDK = require('telesignsdk');
-
-
 
 //MongodbClient
 const url =
@@ -43,6 +40,11 @@ const dbName="KissanAssignmentDatabase";
 
   app.get('/',(req,res)=>{
     res.send("welcome to server");
+  })
+
+  app.post('/jiraWebhooks',(req,res)=>{
+    console.log("The body is ",req.body);
+    res.send("called jira webhooks");
   })
 
   //This get api is used to fetch all the contact details for every person
@@ -85,20 +87,16 @@ const dbName="KissanAssignmentDatabase";
 
   
   app.post('/sendMessage',(req,res)=>{
-    
     const from = '919986792651';
     console.log(req.body);
     const to = req.body['to'];
-
     const text = req.body['message'];
-    console.log("To is ",to,"  ",text);
     nexmo.message.sendSms(from, to, text, (err, responseData) => {
       if (err) {
           console.log(err);
           return res.status(502).send({
             message: 'there is database side error'
           });
-         // res.send(err);  //Server error
       } else {
           if(responseData.messages[0]['status'] === "0") {
               console.log("Message sent successfully.");
@@ -122,7 +120,7 @@ const dbName="KissanAssignmentDatabase";
                       message=req.body['message'];
 
 
-                     // dbo.collection('Users_Credentials').insert({"name":"mr kunal"});
+                     //Promise to check whether records has been inserted in database.
                       let storeMessagePromise=dbo.collection('Messages').insert(
                         {
                           "Name":name,
@@ -148,12 +146,6 @@ const dbName="KissanAssignmentDatabase";
                 }
                 
               });
-
-
-
-
-
-              // res.send({"status":"Success"});
           } else {
             console.log(responseData);
               console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
@@ -165,6 +157,8 @@ const dbName="KissanAssignmentDatabase";
       }
   })
   })
+
+
 
 
 //this api is used for fetching all the messages sent to all users
@@ -203,37 +197,6 @@ app.get('/getMessages',(req,res)=>{
 })
 
 
-
-
-
-// app.get('/message',(req,res)=>{
-
-
-
-//   // Download the helper library from https://www.twilio.com/docs/node/install
-// // Your Account Sid and Auth Token from twilio.com/console
-// // DANGER! This is insecure. See http://twil.io/secure
-// const accountSid = 'ACc7c572f4bc012a9fdb0bf5d27bc6b400';
-// const authToken = 'f84783044f81abfa7caf58a0b8e2df10';
-// const client = require('twilio')(accountSid, authToken);
-
-// client.messages
-//   .create({
-//      body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
-//      from: '+919986792651',
-//      to: '+919413942211'
-//    })
-//   .then(message => console.log(message.sid))
-//   .catch(err=>{
-//     console.log(err);
-//   })
-
-
-// })
-
-
-
 app.listen(PORT, (req,res)=> {
     console.log("Server is running with changes at heroku "+ PORT +" port");
-    //console.log("Url is ",app.get('url'));
   });

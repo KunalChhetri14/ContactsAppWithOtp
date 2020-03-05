@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
-  HttpHeaders,
   HttpErrorResponse
 } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -24,11 +23,16 @@ export class ContactsServiceService {
  //entry on refresh of page to view contactDetails and sendMessage component
  allowEntry=false;
 
+
+ //Herokurl where server is hosted
  herokuAppUrl="https://contactlistserver.herokuapp.com/"
+
+//  Object that stores all the message details which needs to be send to server
  postMessageDetails={};
  
  //service to call api's which return all the contacts as an array
   public getAllContacts(){
+    this.allowEntry=true;
     return this.httpService.get(this.herokuAppUrl+"getContactList")
     .pipe(catchError(this.errHandler))
   }
@@ -40,10 +44,15 @@ export class ContactsServiceService {
  }
 
 
+
+ //This boolean return method checks decides the validation of authguard.
+ //Restricts from directly entering into another component other than contactLists component.
  public allowNavigate(){
    return this.allowEntry;
  }
 
+
+ //returns the contact info that was clicked in the previous component
  public getContact(){
    return this.contactInfo;
  }
@@ -54,15 +63,13 @@ export class ContactsServiceService {
     return throwError(err);
   }
 
-  
+  //Responsible for messaging individuals and stroring the message in database.
   public callExternalMsgAPI(message:string):Observable<any>{
     console.log(message);
     this.postMessageDetails['message']=message;
     this.postMessageDetails['to']=this.contactInfo.phoneNumber;
     this.postMessageDetails['Name']=this.contactInfo.fName + this.contactInfo.lName;
     let date:Date=new Date();
-    console.log("Date ="+date);
-    
     this.postMessageDetails['Timeline']=date;
     console.log(this.postMessageDetails);
     return this.httpService.post(this.herokuAppUrl+"sendMessage",this.postMessageDetails)
@@ -70,6 +77,8 @@ export class ContactsServiceService {
   }
 
 
+
+  //Gets all user messages form database.
   public getUserMessages():Observable<any>{
       return this.httpService.get<any>(this.herokuAppUrl+"getMessages")
       .pipe(catchError(this.errHandler));

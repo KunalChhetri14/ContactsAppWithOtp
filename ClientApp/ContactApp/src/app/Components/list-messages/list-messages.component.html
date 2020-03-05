@@ -1,26 +1,20 @@
+<!-- When the data isn't fetched then the loading progress spinner is shown -->
 <ng-container *ngIf="loading==true">
-    <!-- <p class="loading">Patience, we are currently loading your data...</p> -->
-       
-    <div>
-
         <mat-progress-spinner  style="margin:0 auto;overflow: hidden"
         class="example-margin"
         [color]="color"
         [mode]="mode"
         [value]="value">
         </mat-progress-spinner>
-
-    </div>
-    
-
 </ng-container>
 
+
+<!-- If data is finised fetching -->
 <ng-container *ngIf="loading==false">
         <div class="list-sample" *ngFor="let contact of messageDetails;">
             <br>
             <igx-list >
                 <igx-list-item igxRipple igxRippleTarget=".igx-list__item-content" #item >
-                   
                      <div >
                             <span igxListLineTitle style="float:left;padding-left:2em">
                                 {{ contact.Name }}
@@ -28,7 +22,6 @@
                             <span igxListLineTitle style="float:right; padding-right:2em;color:gray">
                                 {{contact.timeline | date:'medium'}}
                             </span>
-
                     </div>
                     <br>
                     <br>
@@ -37,6 +30,5 @@
             </igx-list>
             <br>
         </div>
-    
 </ng-container>
 

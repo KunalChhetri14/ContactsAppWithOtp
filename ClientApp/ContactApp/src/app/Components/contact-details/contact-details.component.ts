@@ -10,12 +10,13 @@ import { Router } from '@angular/router';
 })
 export class ContactDetailsComponent implements OnInit {
 
+
   constructor(private service:ContactsServiceService,
               private _location: Location,
               private router:Router) { }
 
   //Store contactDetails
-  contact={};
+  contact:any ={};
 
   //Fetch the contact details that is needed to be shown from contactInfo subject
   ngOnInit() {

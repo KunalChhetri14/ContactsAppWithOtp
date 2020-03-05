@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ContactsServiceService} from '../../Service/contacts-service.service';
 import {ThemePalette} from '@angular/material/core';
 import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
+import {MatSnackBar} from '@angular/material';
+
 
 
 @Component({
@@ -11,7 +13,8 @@ import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
 })
 export class ListMessagesComponent implements OnInit {
 
-  constructor(private service:ContactsServiceService) { }
+  constructor(private service:ContactsServiceService,
+              private _snackbar:MatSnackBar) { }
   messageDetails;
   loading=true;
 
@@ -25,7 +28,13 @@ export class ListMessagesComponent implements OnInit {
       console.log("The messages are: ",data);
       this.messageDetails=data;
       this.loading=false;
+    },
+    err=>{
+      this.loading=false;
+      this._snackbar.open('Data cannot be fetched please reload the page');
     })
   }
+
+
 
 }

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettierScript": "prettier --single-quote  es5 --write \"app.js\""
   },
   "author": "",
   "license": "ISC",
@@ -15,8 +16,6 @@
     "mongo-client": "^0.2.1",
     "mongodb": "^3.5.4",
     "nexmo": "^2.6.0",
-    "nodemon": "^2.0.2",
-    "telesignsdk": "^2.2.1",
-    "twilio": "^3.39.5"
+    "nodemon": "^2.0.2"
   }
 }
