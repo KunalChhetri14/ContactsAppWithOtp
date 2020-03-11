@@ -42,10 +42,6 @@ const dbName="KissanAssignmentDatabase";
     res.send("welcome to server");
   })
 
-  app.post('/jiraWebhook',(req,res)=>{
-    console.log("The body is ",req.body);
-    res.send("called jira webhooks");
-  })
 
   //This get api is used to fetch all the contact details for every person
   app.get('/getContactList',(req,res)=>{
